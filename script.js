@@ -1,23 +1,57 @@
-document.querySelector("form").addEventListener("submit", function(event){
-    event.preventDefault()
-    
+
+
+/* identifying input fields */
     let firstNameInput = document.getElementById("first-name");
     let lastNameInput = document.getElementById("last-name");
     let commentContentInput = document.getElementById("message");
 
-    let firstName = firstNameInput.value;
-    let lastName = lastNameInput.value;
-    let commentContent = commentContentInput.value;
+/* events */
+firstNameInput.addEventListener("input" , function(){
+    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
+} );
+firstNameInput.addEventListener("focus" , function(){
+    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
+} );
 
-    CreatAndAddComment(firstName , lastName , commentContent);
-    
-    /* deleting the content of the fields */
+lastNameInput.addEventListener("input" , function(){
+    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
+} );
+lastNameInput.addEventListener("focus" , function(){
+    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
+} );
 
-    firstNameInput.value = "" ;
-    commentContentInput.value = "";
-    lastNameInput.value = "";
+commentContentInput.addEventListener("input" , function(){
+    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
+} );
+commentContentInput.addEventListener("focus" , function(){
+    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
+} );
 
-});
+document.querySelector("button").addEventListener("click", sendComment);
+
+/* ---------------------------------------------------------------------------- */
+
+function sendComment(event){
+    event.preventDefault()
+
+    if ( validateNotEmptyFields(firstNameInput , lastNameInput , commentContentInput) === true ){
+
+        let firstName = firstNameInput.value;
+        let lastName = lastNameInput.value;
+        let commentContent = commentContentInput.value;
+
+        let comment = CreatAndAddComment(firstName , lastName , commentContent);
+        addComment(comment);
+        /* deleting the content of the fields */
+
+        firstNameInput.value = "" ;
+        commentContentInput.value = "";
+        lastNameInput.value = "";
+
+    }
+}
+
+
 
 function CreatAndAddComment(firstName , lastName , commentContent ){
 
@@ -40,14 +74,32 @@ function CreatAndAddComment(firstName , lastName , commentContent ){
     paragraph.textContent = commentContent ;
     
 
-    /* -------------constructs the comment structure and appens it to the comment list-------------- */
+    /* -------------constructs the comment structure and append it to the comment list-------------- */
 
     mainDiv.appendChild(subDiv);
     subDiv.appendChild(title);
     subDiv.appendChild(paragraphDiv);
     paragraphDiv.appendChild(paragraph);
 
+   return mainDiv;
+}
+
+function addComment(comment){
     let commentList = document.getElementById("comment-list");
 
-    commentList.appendChild(mainDiv);
-}
+    commentList.appendChild(comment);
+};
+
+function validateNotEmptyFields(firstNameInput, lastNameInput , commentContentInput){
+    /* chenking if the fields strings are empty or just spaces */
+    if ( firstNameInput.value.trim().length === 0 || lastNameInput.value.trim().length === 0 || commentContentInput.value.trim().length === 0) {
+
+        document.getElementById("error-message").style = "display:block; " ;
+
+        return false;
+    } else {
+        document.getElementById("error-message").style = "display:none; " ;
+
+        return true;  
+    };
+};
