@@ -6,28 +6,9 @@
     let commentContentInput = document.getElementById("message");
 
 /* events */
-firstNameInput.addEventListener("input" , function(){
-    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
-} );
-firstNameInput.addEventListener("focus" , function(){
-    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
-} );
 
-lastNameInput.addEventListener("input" , function(){
-    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
-} );
-lastNameInput.addEventListener("focus" , function(){
-    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
-} );
-
-commentContentInput.addEventListener("input" , function(){
-    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
-} );
-commentContentInput.addEventListener("focus" , function(){
-    validateNotEmptyFields(firstNameInput,lastNameInput,commentContentInput)
-} );
-
-document.querySelector("button").addEventListener("click", sendComment);
+/* document.querySelector("button").addEventListener("click", sendComment); */
+document.querySelector("form").addEventListener("submit", sendComment);
 
 /* ---------------------------------------------------------------------------- */
 
@@ -94,11 +75,10 @@ function validateNotEmptyFields(firstNameInput, lastNameInput , commentContentIn
     /* chenking if the fields strings are empty or just spaces */
     if ( firstNameInput.value.trim().length === 0 || lastNameInput.value.trim().length === 0 || commentContentInput.value.trim().length === 0) {
 
-        document.getElementById("error-message").style = "display:block; " ;
+        document.getElementById("error-message").style.display = "block " ;
 
-        return false;
     } else {
-        document.getElementById("error-message").style = "display:none; " ;
+        document.getElementById("error-message").style.display = "none " ;
 
         return true;  
     };
